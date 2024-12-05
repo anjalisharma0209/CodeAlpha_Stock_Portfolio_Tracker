@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .portfolio-header {
+            background-color: #1e3a8a;
+            color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        
+        .total-value {
+            font-size: 1.5em;
+            margin-top: 10px;
+            color: #00bfae;
+        }
+        
+        /* Table Styling */
+        .table-container {
+            overflow-x: auto;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .portfolio-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 1em;
+        }
+        
+        .portfolio-table th,
+        .portfolio-table td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        
+        .portfolio-table th {
+            background-color: #1e3a8a;
+            color: #ffffff;
+            text-transform: uppercase;
+        }
+        
+        .portfolio-table td {
+            color: #333;
+        }
+        
+        .portfolio-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .portfolio-table tr:hover {
+            background-color: #f1f1f1;
+            transform: scale(1.02);
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        
+        .action-link {
+            color: #e63946;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s, text-decoration 0.3s;
+        }
+        
+        .action-link:hover {
+            color: #c5001d;
+            text-decoration: underline;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .portfolio-table th, .portfolio-table td {
+                padding: 8px;
+                font-size: 0.9em;
+            }
+        }
+        </style>
+</head>
+<body>
+ {% extends 'portfolio/base.html' %}
+
+{% block content %}
+<!-- Page Header -->
+<div class="portfolio-header">
+    <h1>My Portfolio</h1>
+    <p class="total-value">Total Portfolio Value: ${{ total_value }}</p>
+</div>
+
+<!-- Portfolio Table -->
+<div class="table-container">
+    <table class="portfolio-table">
+        <thead>
+            <tr>
+                <th>Ticker</th>
+                <th>Quantity</th>
+                <th>Purchase Price</th>
+                <th>Current Price</th>
+                <th>Value</th>
+                <th>Profit/Loss</th>
+                <th>% Change</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for stock in portfolio_data %}
+            <tr>
+                <td>{{ stock.ticker }}</td> 
+                <td>{{ stock.quantity }}</td>
+                <td>${{ stock.purchase_price }}</td>
+                <td>${{ stock.current_price }}</td>
+                <td>${{ stock.value }}</td>
+                <td>${{ stock.profit_loss }}</td>
+                <td>{{ stock.percentage_change }}%</td>
+                <td>
+                    <a class="action-link" href="{% url 'delete_stock' stock.ticker %}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+<!-- Embedded CSS -->
+
+
+</body>
+</html>
